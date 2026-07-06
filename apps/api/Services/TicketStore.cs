@@ -27,6 +27,28 @@ public class TicketStore
         return ticket;
     }
 
+    public Ticket? UpdateStatus(string id, TicketStatus newStatus)
+    {
+        if (!_store.TryGetValue(id, out var ticket))
+            return null;
+
+        var updated = new Ticket
+        {
+            Id = ticket.Id,
+            Title = ticket.Title,
+            Description = ticket.Description,
+            Status = newStatus,
+            Priority = ticket.Priority,
+            CreatedAt = ticket.CreatedAt,
+            UpdatedAt = DateTimeOffset.UtcNow,
+            AssigneeId = ticket.AssigneeId,
+            ReporterId = ticket.ReporterId
+        };
+
+        _store[id] = updated;
+        return updated;
+    }
+
     // -----------------------------------------------------------------------
 
     private static IEnumerable<Ticket> BuildSeeds()

@@ -52,4 +52,21 @@ public class TicketsController(TicketStore store) : ControllerBase
 
         return CreatedAtAction(nameof(GetById), new { id = ticket.Id }, ticket);
     }
+
+    // PATCH /tickets/{id}/status
+    [HttpPatch("{id}/status")]
+    [ProducesResponseType<Ticket>(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public IActionResult UpdateStatus(string id, [FromBody] UpdateTicketStatusDto dto)
+    {
+        if (!ModelState.IsValid)
+            return ValidationProblem(ModelState);
+
+        if (!Enum.IsDefined(typeof(TicketStatus), dto.Status))
+            return BadRequest(new { error = $"Invalid ticket status: {dto.Status}" });
+
+        var ticket = store.UpdateStatus(id, dto.Status);
+        return ticket is null ? NotFound() : Ok(ticket);
+    }
 }
