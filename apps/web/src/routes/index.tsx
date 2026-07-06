@@ -5,18 +5,12 @@ import type { ColumnsType } from 'antd/es/table';
 import type { Ticket, TicketPriority, TicketStatus } from '@servicedesk/shared-types';
 import { MOCK_TICKETS } from '../mocks/tickets';
 import { NewTicketModal } from '../components/NewTicketModal';
+import { TicketBadge } from '../components/TicketBadge';
 
 export const Route = createFileRoute('/')({
   loader: (): Ticket[] => MOCK_TICKETS,
   component: TicketListPage,
 });
-
-const STATUS_COLOR: Record<TicketStatus, string> = {
-  'open': 'blue',
-  'in-progress': 'orange',
-  'resolved': 'green',
-  'closed': 'default',
-};
 
 const PRIORITY_COLOR: Record<TicketPriority, string> = {
   'low': 'default',
@@ -49,9 +43,7 @@ const COLUMNS: ColumnsType<Ticket> = [
     title: 'Status',
     dataIndex: 'status',
     width: 120,
-    render: (status: TicketStatus) => (
-      <Tag color={STATUS_COLOR[status]}>{status}</Tag>
-    ),
+    render: (status: TicketStatus) => <TicketBadge status={status} />,
   },
   {
     title: 'Priority',

@@ -1,7 +1,8 @@
 import { createFileRoute, Link, notFound } from '@tanstack/react-router';
 import { Descriptions, Tag, Button, Result } from 'antd';
-import type { TicketPriority, TicketStatus } from '@servicedesk/shared-types';
+import type { TicketPriority } from '@servicedesk/shared-types';
 import { findTicketById } from '../mocks/tickets';
+import { TicketBadge } from '../components/TicketBadge';
 
 export const Route = createFileRoute('/tickets/$ticketId')({
   loader: ({ params }): ReturnType<typeof findTicketById> => {
@@ -19,13 +20,6 @@ export const Route = createFileRoute('/tickets/$ticketId')({
   ),
   component: TicketDetailPage,
 });
-
-const STATUS_COLOR: Record<TicketStatus, string> = {
-  'open': 'blue',
-  'in-progress': 'orange',
-  'resolved': 'green',
-  'closed': 'default',
-};
 
 const PRIORITY_COLOR: Record<TicketPriority, string> = {
   'low': 'default',
@@ -50,7 +44,7 @@ function TicketDetailPage() {
         column={2}
       >
         <Descriptions.Item label="Status">
-          <Tag color={STATUS_COLOR[ticket.status]}>{ticket.status}</Tag>
+          <TicketBadge status={ticket.status} />
         </Descriptions.Item>
         <Descriptions.Item label="Priority">
           <Tag color={PRIORITY_COLOR[ticket.priority]}>{ticket.priority}</Tag>

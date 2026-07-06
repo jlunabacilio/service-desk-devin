@@ -32,3 +32,10 @@
 - Small, focused, descriptive commits (Conventional Commits).
 - Write tests alongside every new feature.
 - Prefer explicit over implicit: avoid magic strings; use constants or enums.
+
+## Testing (glob: **/*.test.tsx)
+- Use Vitest with @testing-library/react.
+- Every component test must have: render smoke test, user interaction test,
+  and snapshot.
+- Mock external data at the module level with `vi.mock()`.
+- Never call real APIs in tests.
