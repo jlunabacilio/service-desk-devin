@@ -45,6 +45,17 @@ export const MOCK_TICKETS: Ticket[] = [
     assigneeId: 'user-3',
     reporterId: 'user-21',
   },
+  {
+    id: '5',
+    title: 'Add support for ticket attachments',
+    description: 'Users should be able to upload files when creating or updating tickets.',
+    status: 'open',
+    priority: 'medium',
+    createdAt: '2026-06-12T10:00:00Z',
+    updatedAt: '2026-06-12T10:00:00Z',
+    assigneeId: null,
+    reporterId: 'user-42',
+  },
 ];
 
 export function findTicketById(id: string): Ticket | undefined {
